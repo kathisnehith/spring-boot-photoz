@@ -1,8 +1,12 @@
 package com.example.project.photoz;
+
+import jakarta.validation.constraints.NotEmpty;
+
 public class Photo {
 
     
     private String id;
+    @NotEmpty
     private String filename;
 
     // Default constructor
