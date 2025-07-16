@@ -1,4 +1,6 @@
-package com.example.project.photoz;
+package com.example.project.photoz.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.validation.constraints.NotEmpty;
 
@@ -8,7 +10,10 @@ public class Photo {
     private String id;
     @NotEmpty
     private String filename;
+    @JsonIgnore
+    private byte[] data;
 
+    private String contentType;
     // Default constructor
     public Photo() {
         
@@ -34,6 +39,24 @@ public class Photo {
     public void setFilename(String filename) {
         this.filename = filename;
     }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    
 
     
 
