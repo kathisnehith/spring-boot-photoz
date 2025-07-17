@@ -1,18 +1,34 @@
 package com.example.project.photoz.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotEmpty;
 
+
+@Entity
+@Table(name = "PHOTOZ")
 public class Photo {
 
-    
+    @Id
     private String id;
+
     @NotEmpty
+    @Column(name = "file_name")
     private String filename;
+
+    @Lob
     @JsonIgnore
+    @Column(name = "data")
     private byte[] data;
 
+    @Column(name = "content_type")
     private String contentType;
     // Default constructor
     public Photo() {

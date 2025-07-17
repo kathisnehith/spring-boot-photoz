@@ -8,30 +8,27 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.example.project.photoz.model.Photo;
-import com.example.project.photoz.repository.Photozrepository;
 
 //@Component
 @Service
-public class Photozservice {
-    
-    private final Photozrepository photozrepository;
+public class Photozservicemain {
+    private HashMap<String, Photo> db = new HashMap<>() {{
+        put("01", new Photo("01", "photo1.jpg"));
+        put("02", new Photo("02", "photo2.jpg"));
+    }};
 
-    public Photozservice(Photozrepository photozrepository) {
-        this.photozrepository = photozrepository;
-    }
-
-    public Iterable<Photo> get() {
-        return photozrepository.findAll();
+    public Collection<Photo> get() {
+        return db.values();
     }
 
 
     public Photo get(String id) {
-        return photozrepository.findById(id).orElse(null);
+        return db.get(id);
     }
 
 
-    public void remove(String id) {
-            photozrepository.deleteById(id);
+    public Photo remove(String id) {
+            return db.remove(id);
     }
 
 
@@ -41,7 +38,7 @@ public class Photozservice {
         photo.setFilename(null != filename ? filename : "unknown.jpg");
         photo.setContentType(contentType);
         photo.setData(data);
-        photozrepository.save(photo);
+        db.put(photo.getId(), photo);
         return photo;
     }
 
