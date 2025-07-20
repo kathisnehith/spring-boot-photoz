@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.example.project.photoz.model.Photo;
 import com.example.project.photoz.service.Photozservice;
+import io.swagger.v3.oas.annotations.Operation;
 
 import jakarta.validation.Valid;
 
@@ -54,6 +55,7 @@ public class Photozcontroller {
     
     @GetMapping("/photoz")
     public Iterable<Photo> get() {
+        System.out.println("Fetching all photoZ");
         return photozservice.get();
     }
 
@@ -61,22 +63,26 @@ public class Photozcontroller {
     public Photo get(@PathVariable String id){
         Photo photo = photozservice.get(id);
         if (photo == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        System.out.println("Fetching photo with id: " + id);
         return photo;
     }
     
 
     @DeleteMapping("/photoz/{id}")
     public void delete(@PathVariable String id){
+        System.out.println("Deleting photo with id: " + id);
         photozservice.remove(id);
     }
 
 
-    @PostMapping("/photoz")
+    @PostMapping(value = "/photoz", consumes = "multipart/form-data")
+    @Operation(summary = "Upload a photo", description = "Upload a photo file")
     public ResponseEntity<Photo> create(@RequestPart("data") MultipartFile file) throws IOException {
         if (file == null || file.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
         Photo photo = photozservice.save(file.getOriginalFilename(), file.getContentType(),file.getBytes());
+        System.out.println("Uploaded photo: " + photo.getFilename());
         return ResponseEntity.ok(photo);
     }
 
