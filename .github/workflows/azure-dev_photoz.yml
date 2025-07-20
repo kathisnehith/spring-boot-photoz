@@ -30,8 +30,8 @@ jobs:
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: java-app
-          path: '${{ github.workspace }}/target/*.war'
+          name: photoz
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: windows-latest
@@ -41,7 +41,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: java-app
+          name: photoz
       
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'photoz'
           slot-name: 'Production'
-          package: '*.war'
+          package: '*.jar'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6F0B4AB576014D87A8F1052C3AE6A349 }}
