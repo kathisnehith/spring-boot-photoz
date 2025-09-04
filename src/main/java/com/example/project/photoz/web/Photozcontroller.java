@@ -49,11 +49,11 @@ public class Photozcontroller {
 
     @GetMapping("/")
     public String hello(){
-        return "Hello, Photoz!!";
+        return "Hello, Photoz!!- Welcome to Photoz Application- //\n Build With Spring Boot- // Managed by Azure serverless-SQL DB, Containerized with Docker";
     }
 
     
-    @GetMapping("/photoz")
+    @GetMapping("/photoz/all")
     public Iterable<Photo> get() {
         System.out.println("Fetching all photoZ");
         return photozservice.get();
@@ -68,7 +68,7 @@ public class Photozcontroller {
     }
     
 
-    @DeleteMapping("/photoz/{id}")
+    @DeleteMapping("/deletephotoz/{id}")
     public void delete(@PathVariable String id){
         System.out.println("Deleting photo with id: " + id);
         photozservice.remove(id);

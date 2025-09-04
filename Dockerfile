@@ -1,5 +1,17 @@
+
+
+
+# Stage 1: Build the application
+FROM eclipse-temurin:21-jdk-alpine AS build
+WORKDIR /app
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN ./mvnw dependency:go-offline
+COPY src ./src
+RUN ./mvnw package -DskipTests
+
+# Stage 2: Create the final image
 FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
-COPY target/photoz-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","app.jar"]
+COPY --from=build /app/target/*.jar ./app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
